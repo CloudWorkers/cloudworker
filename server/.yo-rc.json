@@ -1,0 +1,24 @@
+{
+  "generator-jhipster": {
+    "baseName": "cloudworker",
+    "packageName": "com.cloudworkers.cloudworker",
+    "packageFolder": "com/cloudworkers/cloudworker",
+    "authenticationType": "oauth2",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": "no",
+    "useSass": true,
+    "buildTool": "maven",
+    "frontendBuilder": "grunt",
+    "enableTranslation": false,
+    "enableSocialSignIn": false,
+    "rememberMeKey": "663b14a21ef5de9f6255fdf4a974b3352ea43fc3",
+    "testFrameworks": [
+      "gatling"
+    ]
+  }
+}
