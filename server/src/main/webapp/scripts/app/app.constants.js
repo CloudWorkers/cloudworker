@@ -4,6 +4,10 @@ angular.module('cloudworkerApp')
 
 .constant('ENV', 'dev')
 
+.constant('CLIENT_ID', 'cloudworkernode')
+
+.constant('CLIENT_SECRET', 'nodeSecret1')
+
 .constant('VERSION', '0.0.1-SNAPSHOT')
 
 ;

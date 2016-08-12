@@ -334,6 +334,8 @@ module.exports = function (grunt) {
                 },
                 constants: {
                     ENV: 'dev',
+                    CLIENT_ID: 'cloudworkernode',
+                    CLIENT_SECRET: 'nodeSecret1',
                     VERSION: parseVersionFromPomXml()
                 }
             },
@@ -343,6 +345,8 @@ module.exports = function (grunt) {
                 },
                 constants: {
                     ENV: 'prod',
+                    CLIENT_ID: 'cloudworkernode',
+                    CLIENT_SECRET: 'nodeSecret1',
                     VERSION: parseVersionFromPomXml()
                 }
             }
