@@ -6,7 +6,7 @@ enum ConfigurationKeys { VERSION, MAX_WORKERS }
 
 entity Node {
   name String required,
-  key String required,
+  secret String required,
   status NodeStatus,
   date ZonedDateTime,
 }
