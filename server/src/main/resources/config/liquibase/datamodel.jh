@@ -1,0 +1,51 @@
+enum NodeStatus { DISABLED, STOPPED, WAITING, RUNNING }
+enum WorkerStatus { STOPPED, RUNNING }
+enum ActionStatus { PENDING, COMPLETED, ERROR }
+enum Actions { KILL, START_WORKER, STOP_WORKER }
+enum ConfigurationKeys { VERSION, MAX_WORKERS }
+
+entity Node {
+  name String required,
+  key String required,
+  status NodeStatus,
+  date ZonedDateTime,
+}
+
+entity NodeInfo {
+  hostname String,
+  ip String,
+  os String,
+}
+
+entity Worker {
+  command String required,
+  args String,
+  status WorkerStatus,
+}
+
+entity Config {
+  key ConfigurationKeys required,
+  value String required,
+}
+
+entity Output {
+  message String required,
+}
+
+entity Action {
+  action Actions required,
+  args String,
+  status ActionStatus,
+  date ZonedDateTime,
+}
+
+relationship OneToOne { Node{info} to NodeInfo{node} }
+relationship OneToMany { Node{worker} to Worker{node(name)} }
+relationship OneToMany { Node{action(name)} to Action{node(name)} }
+relationship OneToMany { Node{output(message)} to Output{node(name)} }
+relationship OneToMany { Node{config(key)} to Config{node(name)} }
+
+relationship OneToMany { Worker{output(message)} to Output{worker} }
+
+paginate Config, Worker, Node with pagination
+service Config, Worker, Node with serviceClass
