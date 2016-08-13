@@ -1,0 +1,68 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myActionLabel">Create or edit a Action</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="action.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_action">Action</label>
+            <select class="form-control" name="action" ng-model="action.action" id="field_action" required>
+                <option value="KILL">KILL</option>
+                <option value="START_WORKER">START_WORKER</option>
+                <option value="STOP_WORKER">STOP_WORKER</option>
+            </select>
+            <div ng-show="editForm.action.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.action.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_args">Args</label>
+            <input type="text" class="form-control" name="args" id="field_args"
+                    ng-model="action.args"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_status">Status</label>
+            <select class="form-control" name="status" ng-model="action.status" id="field_status">
+                <option value="PENDING">PENDING</option>
+                <option value="COMPLETED">COMPLETED</option>
+                <option value="ERROR">ERROR</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_date">Date</label>
+            <input id="field_date" type="text" class="form-control" uib-datepicker-popup="{{dateformat}}" ng-model="action.date" is-open="datePickerForDate.status.opened"
+            />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="datePickerForDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="field_node">node</label>
+            <select class="form-control" id="field_node" name="node" ng-model="action.node" ng-options="node as node.name for node in nodes track by node.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,52 @@
+<div>
+    <h2>Commands</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" ui-sref="command.new">
+                    <span class="glyphicon glyphicon-flash"></span> <span>Create a new Command</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Description</span></th>
+                    <th><span>Command</span></th>
+                    <th><span>Args</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="command in commands track by command.id">
+                    <td><a ui-sref="command.detail({id:command.id})">{{command.id}}</a></td>
+                    <td>{{command.description}}</td>
+                    <td>{{command.command}}</td>
+                    <td>{{command.args}}</td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="command.detail({id:command.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span> View</span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="command.edit({id:command.id})"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="command.delete({id:command.id})"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

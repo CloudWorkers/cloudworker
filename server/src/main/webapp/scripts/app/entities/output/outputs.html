@@ -1,0 +1,59 @@
+<div>
+    <h2>Outputs</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" ui-sref="output.new">
+                    <span class="glyphicon glyphicon-flash"></span> <span>Create a new Output</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr jh-sort="predicate" ascending="reverse" callback="loadAll()">
+                    <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="message"><span>Message</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="node.name"><span>node</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="worker.id"><span>worker</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="output in outputs track by output.id">
+                    <td><a ui-sref="output.detail({id:output.id})">{{output.id}}</a></td>
+                    <td>{{output.message}}</td>
+                    <td>
+                        <a ui-sref="node.detail({id:output.node.id})">{{output.node.name}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="worker.detail({id:output.worker.id})">{{output.worker.id}}</a>
+                    </td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="output.detail({id:output.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span> View</span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="output.edit({id:output.id})"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="output.delete({id:output.id})"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <uib-pagination class="pagination-sm" total-items="totalItems" ng-model="page" ng-change="loadAll()"></uib-pagination>
+    </div>
+</div>

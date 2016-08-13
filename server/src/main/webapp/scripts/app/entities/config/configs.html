@@ -1,0 +1,57 @@
+<div>
+    <h2>Configs</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" ui-sref="config.new">
+                    <span class="glyphicon glyphicon-flash"></span> <span>Create a new Config</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr jh-sort="predicate" ascending="reverse" callback="loadAll()">
+                    <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="key"><span>Key</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="value"><span>Value</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="node.name"><span>node</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="config in configs track by config.id">
+                    <td><a ui-sref="config.detail({id:config.id})">{{config.id}}</a></td>
+                    <td translate="{{'cloudworkerApp.ConfigurationKeys.' + config.key}}">{{config.key}}</td>
+                    <td>{{config.value}}</td>
+                    <td>
+                        <a ui-sref="node.detail({id:config.node.id})">{{config.node.name}}</a>
+                    </td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="config.detail({id:config.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span> View</span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="config.edit({id:config.id})"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="config.delete({id:config.id})"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <uib-pagination class="pagination-sm" total-items="totalItems" ng-model="page" ng-change="loadAll()"></uib-pagination>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-many",
+      "relationshipName": "worker",
+      "otherEntityName": "worker",
+      "otherEntityRelationshipName": "node"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "one-to-many",
+      "relationshipName": "action",
+      "otherEntityName": "action",
+      "otherEntityRelationshipName": "node"
+    },
+    {
+      "relationshipId": 3,
+      "relationshipType": "one-to-many",
+      "relationshipName": "output",
+      "otherEntityName": "output",
+      "otherEntityRelationshipName": "node"
+    },
+    {
+      "relationshipId": 4,
+      "relationshipType": "one-to-many",
+      "relationshipName": "config",
+      "otherEntityName": "config",
+      "otherEntityRelationshipName": "node"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "secret",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "status",
+      "fieldType": "NodeStatus",
+      "fieldValues": "DISABLED,STOPPED,WAITING,RUNNING"
+    },
+    {
+      "fieldId": 4,
+      "fieldName": "date",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldId": 5,
+      "fieldName": "hostname",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 6,
+      "fieldName": "ip",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 7,
+      "fieldName": "os",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20160813012129",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "entityTableName": "node"
+}

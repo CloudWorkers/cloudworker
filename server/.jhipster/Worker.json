@@ -1,0 +1,40 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-many",
+      "relationshipName": "output",
+      "otherEntityName": "output",
+      "otherEntityRelationshipName": "worker"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "one-to-one",
+      "relationshipName": "command",
+      "otherEntityName": "command",
+      "otherEntityField": "description",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "worker"
+    },
+    {
+      "relationshipId": 3,
+      "relationshipType": "many-to-one",
+      "relationshipName": "node",
+      "otherEntityName": "node",
+      "otherEntityField": "name"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "status",
+      "fieldType": "WorkerStatus",
+      "fieldValues": "STOPPED,RUNNING"
+    }
+  ],
+  "changelogDate": "20160813012130",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "entityTableName": "worker"
+}

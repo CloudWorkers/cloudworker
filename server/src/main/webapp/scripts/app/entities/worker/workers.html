@@ -1,0 +1,59 @@
+<div>
+    <h2>Workers</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" ui-sref="worker.new">
+                    <span class="glyphicon glyphicon-flash"></span> <span>Create a new Worker</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr jh-sort="predicate" ascending="reverse" callback="loadAll()">
+                    <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="status"><span>Status</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="command.description"><span>command</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="node.name"><span>node</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="worker in workers track by worker.id">
+                    <td><a ui-sref="worker.detail({id:worker.id})">{{worker.id}}</a></td>
+                    <td translate="{{'cloudworkerApp.WorkerStatus.' + worker.status}}">{{worker.status}}</td>
+                    <td>
+                        <a ui-sref="command.detail({id:worker.command.id})">{{worker.command.description}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="node.detail({id:worker.node.id})">{{worker.node.name}}</a>
+                    </td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="worker.detail({id:worker.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span> View</span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="worker.edit({id:worker.id})"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="worker.delete({id:worker.id})"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <uib-pagination class="pagination-sm" total-items="totalItems" ng-model="page" ng-change="loadAll()"></uib-pagination>
+    </div>
+</div>

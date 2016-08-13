@@ -1,0 +1,34 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "worker",
+      "otherEntityName": "worker",
+      "ownerSide": false,
+      "otherEntityRelationshipName": "command"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "command",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "args",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20160813012131",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "command"
+}

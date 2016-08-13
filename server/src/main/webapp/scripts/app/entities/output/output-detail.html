@@ -1,0 +1,46 @@
+
+<div>
+    <h2><span>Output</span> {{output.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>Message</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{output.message}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>node</span>
+                </td>
+                <td>
+                    <a class="form-control-static" ui-sref="node.detail({id:output.node.id})">{{output.node.name}}</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>worker</span>
+                </td>
+                <td>
+                    <a class="form-control-static" ui-sref="worker.detail({id:output.worker.id})">{{output.worker.id}}</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

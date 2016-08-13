@@ -1,0 +1,46 @@
+
+<div>
+    <h2><span>Config</span> {{config.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>Key</span>
+                </td>
+                <td>
+                    <span class="form-control-static" translate="{{'cloudworkerApp.ConfigurationKeys.' + config.key}}">{{config.key}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Value</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{config.value}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>node</span>
+                </td>
+                <td>
+                    <a class="form-control-static" ui-sref="node.detail({id:config.node.id})">{{config.node.name}}</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

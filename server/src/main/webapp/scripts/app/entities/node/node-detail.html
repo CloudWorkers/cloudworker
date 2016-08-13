@@ -1,0 +1,78 @@
+
+<div>
+    <h2><span>Node</span> {{node.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>Name</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{node.name}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Secret</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{node.secret}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Status</span>
+                </td>
+                <td>
+                    <span class="form-control-static" translate="{{'cloudworkerApp.NodeStatus.' + node.status}}">{{node.status}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Date</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{node.date | date:'medium'}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Hostname</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{node.hostname}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Ip</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{node.ip}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Os</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{node.os}}</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

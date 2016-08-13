@@ -1,0 +1,43 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "many-to-one",
+      "relationshipName": "node",
+      "otherEntityName": "node",
+      "otherEntityField": "name"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "action",
+      "fieldType": "Actions",
+      "fieldValues": "KILL,START_WORKER,STOP_WORKER",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "args",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "status",
+      "fieldType": "ActionStatus",
+      "fieldValues": "PENDING,COMPLETED,ERROR"
+    },
+    {
+      "fieldId": 4,
+      "fieldName": "date",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "changelogDate": "20160813012134",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "action"
+}
