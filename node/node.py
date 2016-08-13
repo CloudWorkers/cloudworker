@@ -15,8 +15,8 @@ NODE_SECRET = 'todo'
 #API Config
 CLIENT_ID = 'cloudworkernode'
 CLIENT_SECRET = 'nodeSecret1'
-USERNAME = 'admin'
-PASSWORD = 'admin'
+USERNAME = 'user'
+PASSWORD = 'user'
 
 def get_token(base_url, client_id, client_secret, username, password):
     '''Gets the OAuth Access Token '''

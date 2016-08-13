@@ -9,18 +9,19 @@ entity Node {
   secret String required,
   status NodeStatus,
   date ZonedDateTime,
-}
-
-entity NodeInfo {
   hostname String,
   ip String,
   os String,
 }
 
 entity Worker {
-  command String required,
-  args String,
   status WorkerStatus,
+}
+
+entity Command {
+  description String,
+  command String,
+  args String,
 }
 
 entity Config {
@@ -39,13 +40,13 @@ entity Action {
   date ZonedDateTime,
 }
 
-relationship OneToOne { Node{info} to NodeInfo{node} }
 relationship OneToMany { Node{worker} to Worker{node(name)} }
 relationship OneToMany { Node{action(name)} to Action{node(name)} }
 relationship OneToMany { Node{output(message)} to Output{node(name)} }
 relationship OneToMany { Node{config(key)} to Config{node(name)} }
 
 relationship OneToMany { Worker{output(message)} to Output{worker} }
+relationship OneToOne { Worker{command(description)} to Command{worker} }
 
-paginate Config, Worker, Node with pagination
-service Config, Worker, Node with serviceClass
+paginate Config, Worker, Output, Node with pagination
+service Config, Worker, Output, Node with serviceClass
