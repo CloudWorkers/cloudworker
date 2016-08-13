@@ -28,7 +28,7 @@ angular.module('cloudworkerApp')
 
         $scope.clear = function () {
             $scope.config = {
-                key: null,
+            	item: null,
                 value: null,
                 id: null
             };

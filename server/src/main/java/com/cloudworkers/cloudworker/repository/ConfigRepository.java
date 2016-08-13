@@ -11,4 +11,6 @@ import java.util.List;
  */
 public interface ConfigRepository extends JpaRepository<Config,Long> {
 
+	@Query(value = "SELECT * FROM config WHERE node_id = ?1", nativeQuery = true)
+	List<Config> findAllByNodeId(Long id);
 }

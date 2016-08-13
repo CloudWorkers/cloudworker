@@ -58,6 +58,18 @@ public class ConfigService {
     }
 
     /**
+     *  get configs by node id.
+     *  @return the configs
+     */
+    @Transactional(readOnly = true) 
+    public List<Config> findAllByNodeId(Long id) {
+        log.debug("Request to get Config for Node : {}", id);
+        List<Config> configs = configRepository.findAllByNodeId(id);
+        return configs;
+    }
+    
+    
+    /**
      *  delete the  config by id.
      */
     public void delete(Long id) {

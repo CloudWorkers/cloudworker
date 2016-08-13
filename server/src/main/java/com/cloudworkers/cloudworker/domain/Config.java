@@ -26,8 +26,8 @@ public class Config implements Serializable {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "key", nullable = false)
-    private ConfigurationKeys key;
+    @Column(name = "item", nullable = false)
+    private ConfigurationKeys item;
 
     @NotNull
     @Column(name = "value", nullable = false)
@@ -45,12 +45,12 @@ public class Config implements Serializable {
         this.id = id;
     }
 
-    public ConfigurationKeys getKey() {
-        return key;
+    public ConfigurationKeys getItem() {
+        return item;
     }
 
-    public void setKey(ConfigurationKeys key) {
-        this.key = key;
+    public void setItem(ConfigurationKeys item) {
+        this.item = item;
     }
 
     public String getValue() {
@@ -90,7 +90,7 @@ public class Config implements Serializable {
     public String toString() {
         return "Config{" +
             "id=" + id +
-            ", key='" + key + "'" +
+            ", item ='" + item + "'" +
             ", value='" + value + "'" +
             '}';
     }

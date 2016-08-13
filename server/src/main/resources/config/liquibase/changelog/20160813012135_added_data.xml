@@ -24,5 +24,11 @@
                   tableName="node">
         </loadData>
 
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/config.csv"
+                  separator=";"
+                  tableName="config">
+        </loadData>
+
     </changeSet>
 </databaseChangeLog>

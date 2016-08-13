@@ -74,6 +74,25 @@ public class NodeResource {
     }
 
     /**
+     * PUT  /nodes/date/{id} -> Updates an existing node's date.
+     */
+    @RequestMapping(value = "/nodes/date/{id}",
+        method = RequestMethod.PUT,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Node> updateNodeDate(@PathVariable Long id) throws URISyntaxException {
+        log.debug("REST request to update Nodes Date : {}", id);
+        Node node = nodeService.findOne(id);
+        if (node.getId() == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Node result = nodeService.updateDate(node);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert("node", node.getId().toString()))
+            .body(result);
+    }
+
+    /**
      * GET  /nodes -> get all the nodes.
      */
     @RequestMapping(value = "/nodes",

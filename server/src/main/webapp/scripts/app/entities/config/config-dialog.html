@@ -14,15 +14,15 @@
                     ng-model="config.id" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_key">Key</label>
-            <select class="form-control" name="key" ng-model="config.key" id="field_key" required>
+            <label class="control-label" for="field_item">Item</label>
+            <select class="form-control" name="item" ng-model="config.item" id="field_item" required>
                 <option value="VERSION">VERSION</option>
                 <option value="MAX_WORKERS">MAX_WORKERS</option>
                 <option value="POLL_PERIOD">POLL_PERIOD</option>
             </select>
-            <div ng-show="editForm.key.$invalid">
+            <div ng-show="editForm.item.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.key.$error.required">
+                    ng-show="editForm.item.$error.required">
                     This field is required.
                 </p>
             </div>

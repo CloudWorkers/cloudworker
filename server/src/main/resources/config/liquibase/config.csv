@@ -1,0 +1,3 @@
+id;item;value;node_id
+1;MAX_WORKERS;5;1
+2;POLL_PERIOD;30;1

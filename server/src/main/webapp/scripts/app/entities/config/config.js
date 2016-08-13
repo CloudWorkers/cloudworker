@@ -52,7 +52,7 @@ angular.module('cloudworkerApp')
                         resolve: {
                             entity: function () {
                                 return {
-                                    key: null,
+                                	item: null,
                                     value: null,
                                     id: null
                                 };

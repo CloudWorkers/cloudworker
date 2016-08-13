@@ -1,7 +1,11 @@
 package com.cloudworkers.cloudworker.service;
 
+import com.cloudworkers.cloudworker.domain.Config;
 import com.cloudworkers.cloudworker.domain.Node;
+import com.cloudworkers.cloudworker.domain.enumeration.ConfigurationKeys;
 import com.cloudworkers.cloudworker.domain.enumeration.NodeStatus;
+import com.cloudworkers.cloudworker.domain.util.JSR310DateConverters.DateToZonedDateTimeConverter;
+import com.cloudworkers.cloudworker.repository.ConfigRepository;
 import com.cloudworkers.cloudworker.repository.NodeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,6 +34,9 @@ public class NodeService {
     @Inject
     private NodeRepository nodeRepository;
     
+    @Inject
+    private ConfigRepository configRepository;
+    
     /**
      * Create a node.
      * @return the a node with required generated info
@@ -37,10 +47,28 @@ public class NodeService {
     	//Generate a uuid secret
     	UUID uuid = UUID.randomUUID();   	
         node.setSecret(uuid.toString());
-        
         node.setStatus(NodeStatus.STOPPED);
-
+        
+        //Create default config for new node 
+        createDefaultConfig(node);
+        
         return node;
+    }
+    
+    /**
+     * Create Default Config for a Node
+     */
+    protected void createDefaultConfig(Node node) {
+        Config c = new Config();
+        c.setNode(node);
+        
+        c.setItem(ConfigurationKeys.MAX_WORKERS);
+        c.setValue("5");
+        configRepository.saveAndFlush(c);
+        
+        c.setItem(ConfigurationKeys.POLL_PERIOD);
+        c.setValue("30");
+        configRepository.saveAndFlush(c);
     }
     
     /**
@@ -53,6 +81,17 @@ public class NodeService {
         return result;
     }
 
+    /**
+     * Updates a node's date.
+     * @return the persisted entity
+     */
+    public Node updateDate(Node node) {
+        log.debug("Request to update Node Date: {}", node);     
+        ZonedDateTime now = DateToZonedDateTimeConverter.INSTANCE.convert(new Date());
+        node.setDate(now);
+        Node result = nodeRepository.save(node);
+        return result;
+    }
     /**
      *  get all the nodes.
      *  @return the list of entities

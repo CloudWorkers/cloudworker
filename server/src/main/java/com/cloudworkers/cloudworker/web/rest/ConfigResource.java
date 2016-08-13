@@ -2,7 +2,9 @@ package com.cloudworkers.cloudworker.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.cloudworkers.cloudworker.domain.Config;
+import com.cloudworkers.cloudworker.domain.Node;
 import com.cloudworkers.cloudworker.service.ConfigService;
+import com.cloudworkers.cloudworker.service.NodeService;
 import com.cloudworkers.cloudworker.web.rest.util.HeaderUtil;
 import com.cloudworkers.cloudworker.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -33,6 +35,9 @@ public class ConfigResource {
         
     @Inject
     private ConfigService configService;
+
+    @Inject
+    private NodeService nodeService;
     
     /**
      * POST  /configs -> Create a new config.
@@ -102,6 +107,29 @@ public class ConfigResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * GET  /configs/node:id -> get the config for "id" node.
+     */
+    @RequestMapping(value = "/configs/node/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Config>> getNodeConfig(@PathVariable Long id) {
+        log.debug("REST request to get Config : {}", id);
+        Node node = nodeService.findOne(id);
+        if (node.getId() == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<Config> configs = configService.findAllByNodeId(id);
+        
+        return Optional.ofNullable(configs)
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    
+    
     /**
      * DELETE  /configs/:id -> delete the "id" config.
      */
