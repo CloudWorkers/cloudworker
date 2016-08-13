@@ -2,7 +2,10 @@ package com.cloudworkers.cloudworker.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.cloudworkers.cloudworker.domain.Action;
+import com.cloudworkers.cloudworker.domain.Node;
+import com.cloudworkers.cloudworker.domain.enumeration.ActionStatus;
 import com.cloudworkers.cloudworker.repository.ActionRepository;
+import com.cloudworkers.cloudworker.service.NodeService;
 import com.cloudworkers.cloudworker.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +33,9 @@ public class ActionResource {
         
     @Inject
     private ActionRepository actionRepository;
+
+    @Inject
+    private NodeService nodeService;
     
     /**
      * POST  /actions -> Create a new action.
@@ -78,6 +84,29 @@ public class ActionResource {
         log.debug("REST request to get all Actions");
         return actionRepository.findAll();
             }
+
+    /**
+     * GET  /actions/pending/:id -> get the pending actions for "id" node.
+     */
+    @RequestMapping(value = "/actions/pending/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Action>> getPending(@PathVariable Long id) {
+        log.debug("REST request to get pending Actions for Node: {}", id);
+
+        Node node = nodeService.findOne(id);
+        if (node.getId() == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        
+        List<Action> actions = actionRepository.findByNodeIdAndStatus(id, ActionStatus.PENDING.name());
+        return Optional.ofNullable(actions)
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }    
 
     /**
      * GET  /actions/:id -> get the "id" action.

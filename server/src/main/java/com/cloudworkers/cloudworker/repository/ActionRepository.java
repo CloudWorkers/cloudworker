@@ -11,4 +11,7 @@ import java.util.List;
  */
 public interface ActionRepository extends JpaRepository<Action,Long> {
 
+	
+	@Query(value = "SELECT * FROM action WHERE node_id = ?1 AND status = ?2", nativeQuery = true)
+	List<Action> findByNodeIdAndStatus(Long id, String actionStatus);
 }

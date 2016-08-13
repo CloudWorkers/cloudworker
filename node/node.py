@@ -121,6 +121,18 @@ def get_node_config(base_url, access_token, node_details):
     logging.info('Got Config: %s', result)
     return result
 
+def get_node_actions(base_url, access_token, node_details):
+    '''Get pending actions for node'''
+
+    logging.info('Getting Node Actions')
+
+    endpoint = '/api/actions/pending/%d' % node_details['id']
+    response_data = server_request('GET', access_token, base_url,
+                                   endpoint, None)
+    logging.info('Got Pending Actions: %s', response_data)
+    return response_data
+
+
 def update_node_details(base_url, access_token, node_details):
     '''Update details for the node'''
 
@@ -190,8 +202,9 @@ def start():
         #Get config
         config = get_node_config(BASE_URL, TOKEN, node_details)
 
-
         #Get actions
+        pending_actions = get_node_actions(BASE_URL, TOKEN, node_details)
+
         #Respond to actions
 
         #Get workers/commands

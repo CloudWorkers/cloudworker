@@ -1,10 +1,12 @@
 package com.cloudworkers.cloudworker.service;
 
+import com.cloudworkers.cloudworker.domain.Action;
 import com.cloudworkers.cloudworker.domain.Config;
 import com.cloudworkers.cloudworker.domain.Node;
 import com.cloudworkers.cloudworker.domain.enumeration.ConfigurationKeys;
 import com.cloudworkers.cloudworker.domain.enumeration.NodeStatus;
 import com.cloudworkers.cloudworker.domain.util.JSR310DateConverters.DateToZonedDateTimeConverter;
+import com.cloudworkers.cloudworker.repository.ActionRepository;
 import com.cloudworkers.cloudworker.repository.ConfigRepository;
 import com.cloudworkers.cloudworker.repository.NodeRepository;
 import org.slf4j.Logger;
@@ -36,6 +38,9 @@ public class NodeService {
     
     @Inject
     private ConfigRepository configRepository;
+
+    @Inject
+    private ActionRepository actionRepository;
     
     /**
      * Create a node.
@@ -92,6 +97,7 @@ public class NodeService {
         Node result = nodeRepository.save(node);
         return result;
     }
+
     /**
      *  get all the nodes.
      *  @return the list of entities
