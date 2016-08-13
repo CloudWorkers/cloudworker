@@ -30,8 +30,7 @@ public class Node implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "secret", nullable = false)
+    @Column(name = "secret")
     private String secret;
 
     @Enumerated(EnumType.STRING)
@@ -91,7 +90,7 @@ public class Node implements Serializable {
     }
 
     public void setSecret(String secret) {
-        this.secret = secret;
+    	this.secret = secret;
     }
 
     public NodeStatus getStatus() {

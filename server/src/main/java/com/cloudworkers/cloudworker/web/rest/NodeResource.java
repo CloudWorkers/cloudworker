@@ -43,6 +43,9 @@ public class NodeResource {
     @Timed
     public ResponseEntity<Node> createNode(@Valid @RequestBody Node node) throws URISyntaxException {
         log.debug("REST request to save Node : {}", node);
+        
+        //Add default additional node information (secret etc)
+        node = nodeService.create(node);
         if (node.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("node", "idexists", "A new node cannot already have an ID")).body(null);
         }
@@ -102,6 +105,23 @@ public class NodeResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * GET  /nodes/:secret -> get the "secret" node.
+     */
+    @RequestMapping(value = "/nodes/secret/{secret}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Node> getNodeSecret(@PathVariable String secret) {
+        log.debug("REST request to get Node by its secret: {}", secret);
+        Node node = nodeService.findBySecret(secret);
+        return Optional.ofNullable(node)
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    
     /**
      * DELETE  /nodes/:id -> delete the "id" node.
      */

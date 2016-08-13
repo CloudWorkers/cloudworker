@@ -1,6 +1,7 @@
 package com.cloudworkers.cloudworker.service;
 
 import com.cloudworkers.cloudworker.domain.Node;
+import com.cloudworkers.cloudworker.domain.enumeration.NodeStatus;
 import com.cloudworkers.cloudworker.repository.NodeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Service Implementation for managing Node.
@@ -24,6 +26,22 @@ public class NodeService {
     
     @Inject
     private NodeRepository nodeRepository;
+    
+    /**
+     * Create a node.
+     * @return the a node with required generated info
+     */
+    public Node create(Node node) {
+        log.debug("Request to create Node : {}", node);
+        
+    	//Generate a uuid secret
+    	UUID uuid = UUID.randomUUID();   	
+        node.setSecret(uuid.toString());
+        
+        node.setStatus(NodeStatus.STOPPED);
+
+        return node;
+    }
     
     /**
      * Save a node.
@@ -57,6 +75,19 @@ public class NodeService {
         return node;
     }
 
+    
+    /**
+     *  get one node by its secret.
+     *  @return the entity
+     */
+    @Transactional(readOnly = true) 
+    public Node findBySecret(String secret) {
+        log.debug("Request to get Node : {}", secret);
+        Node node = nodeRepository.findBySecret(secret);
+        return node;
+    }
+    
+    
     /**
      *  delete the  node by id.
      */

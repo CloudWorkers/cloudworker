@@ -11,4 +11,6 @@ import java.util.List;
  */
 public interface NodeRepository extends JpaRepository<Node,Long> {
 
+	@Query(value = "SELECT * FROM node WHERE secret = ?1", nativeQuery = true)
+	Node findBySecret(String secret);
 }
