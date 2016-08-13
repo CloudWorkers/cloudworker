@@ -10,6 +10,8 @@ import json
 import socket
 import platform
 import logging
+import time
+
 
 #Command Line Args
 BASE_URL = 'http://localhost:8080'
@@ -32,6 +34,9 @@ STATUS_WAITING = 'WAITING'
 STATUS_RUNNING = 'RUNNING'
 STATUS_READY = 'READY'
 STATUS_DISABLED = 'DISABLED'
+
+CONFIG_MAX_WORKERS = 'MAX_WORKERS'
+CONFIG_POLL_PERIOD = 'POLL_PERIOD'
 
 
 def run(command):
@@ -97,9 +102,24 @@ def get_node_details(base_url, access_token, secret):
 
     logging.info('Getting Node Details')
 
-    endpoint = '/api/nodes/secret/' + secret
+    endpoint = '/api/nodes/secret/%s' % secret
     return server_request('GET', access_token, base_url,
                           endpoint, None)
+
+def get_node_config(base_url, access_token, node_details):
+    '''Get config for node'''
+
+    logging.info('Getting Node Config')
+
+    endpoint = '/api/configs/node/%d' % node_details['id']
+    response_data = server_request('GET', access_token, base_url,
+                                   endpoint, None)
+    #Unpack results
+    result = {}
+    for item in response_data:
+        result[item['item']] = int(item['value'])
+    logging.info('Got Config: %s', result)
+    return result
 
 def update_node_details(base_url, access_token, node_details):
     '''Update details for the node'''
@@ -108,6 +128,15 @@ def update_node_details(base_url, access_token, node_details):
 
     return server_request('PUT', access_token, base_url,
                           '/api/nodes', node_details)
+
+def update_node_date(base_url, access_token, node_details):
+    '''Update the date for the node'''
+
+    logging.info('Updating Node Date')
+
+    endpoint = '/api/nodes/date/%d' % node_details['id']
+    return server_request('PUT', access_token, base_url,
+                          endpoint, None)
 
 def update_node_status(base_url, access_token, node_details, status):
     '''Update status for the node'''
@@ -147,10 +176,20 @@ def start():
     #Update Status
     update_node_status(BASE_URL, TOKEN, node_details, STATUS_READY)
 
+    #Get Config
+    config = get_node_config(BASE_URL, TOKEN, node_details)
+
 
     #Loop forever
-        #Update time on server
+    while True:
+        logging.info('Looping')
+
+        #Update last seen date
+        update_node_date(BASE_URL, TOKEN, node_details)
+
         #Get config
+        config = get_node_config(BASE_URL, TOKEN, node_details)
+
 
         #Get actions
         #Respond to actions
@@ -159,6 +198,10 @@ def start():
         #Respond to commands
 
         #Send output to server
+
+
+        logging.info('Sleeping for %d seconds ...', config[CONFIG_POLL_PERIOD])
+        time.sleep(config[CONFIG_POLL_PERIOD])
 
 
 if __name__ == '__main__':
