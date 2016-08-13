@@ -6,17 +6,24 @@ import os
 import requests
 import sys
 import base64
+import json
+import socket
+import platform
 
 
 #Command Line Args
 BASE_URL = 'http://localhost:8080'
-NODE_SECRET = 'todo'
+NODE_SECRET = '1753bb75-f3da-4fd7-9227-475f6b95dbaa'
 
 #API Config
 CLIENT_ID = 'cloudworkernode'
 CLIENT_SECRET = 'nodeSecret1'
 USERNAME = 'user'
 PASSWORD = 'user'
+
+#Important temporary session details
+TOKEN = ''
+NODE_ID = ''
 
 def get_token(base_url, client_id, client_secret, username, password):
     '''Gets the OAuth Access Token '''
@@ -46,15 +53,23 @@ def get_token(base_url, client_id, client_secret, username, password):
         response.raise_for_status()
 
 
-def get_nodes(base_url, access_token):
-    '''Get nodes'''
-    url = base_url + '/api/nodes'
+def get_node_details(base_url, secret, access_token):
+    '''Get details for this node'''
+    url = base_url + '/api/nodes/secret/' + secret
     headers = {'Authorization': 'bearer ' + access_token,
                'Accept': 'application/json'}
     response = requests.get(url, headers=headers)
     resonse_json = response.json()
     return resonse_json
 
+def update_node_details(base_url, secret, access_token, node_id, node_details):
+    '''Update details for this node'''
+    url = base_url + '/api/nodes/'
+    headers = {'Authorization': 'bearer ' + access_token,
+               'Accept': 'application/json',
+               'Content-Type': 'application/json'}
+    response = requests.put(url, headers=headers, data=json.dumps(node_details))
+    return response
 
 def run(command):
     '''Run a command '''
@@ -67,13 +82,24 @@ def start():
     '''Run the Application'''
     print 'Starting Cloud Worker Node'
 
-    token = get_token(BASE_URL, CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD)
-    print 'Got Access Token: %s' % (token)
+    #Get Access Token
+    TOKEN = get_token(BASE_URL, CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD)
+    print 'Got Access Token: %s' % (TOKEN)
 
-    print get_nodes(BASE_URL, token)
+    #Get Node Details
+    node_details = get_node_details(BASE_URL, NODE_SECRET, TOKEN)
+    #Save the Node ID to use in the future
+    NODE_ID = node_details.get('id')
+    print 'Got Node ID: %d' % (NODE_ID)
 
-    #Check secret key with api
-    #Update node info
+    #Update Node Details
+    node_details['os'] = "%s %s" %(platform.system(), platform.release())
+    node_details['hostname'] = socket.gethostname()
+    node_details['ip'] = 'todo'
+
+    print 'Updating Node Details'
+    update_node_details(BASE_URL, NODE_SECRET, TOKEN, NODE_ID, node_details)
+
 
     #Loop forever
       #Update time on server
