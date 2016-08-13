@@ -9,7 +9,7 @@ import base64
 import json
 import socket
 import platform
-
+import logging
 
 #Command Line Args
 BASE_URL = 'http://localhost:8080'
@@ -36,11 +36,14 @@ STATUS_DISABLED = 'DISABLED'
 
 def run(command):
     '''Run a command locally'''
+    logging.info('Running Command: %s', command)
     os.system('%s' % command)
 
 
 def get_token(base_url, client_id, client_secret, username, password):
     '''Gets the OAuth Access Token '''
+
+    logging.info('Getting Access Token...')
 
     token_url = base_url + '/oauth/token'
     token_data = {'username': password,
@@ -62,6 +65,7 @@ def get_token(base_url, client_id, client_secret, username, password):
         access_token = response.json().get('access_token')
         #expires = response.json().get('expires_in')
         #refresh_token = response.json().get('refresh_token')
+        logging.info('Got Access Token: %s', access_token)
         return access_token
     else:
         response.raise_for_status()
@@ -90,17 +94,26 @@ def server_request(verb, access_token, base_url, endpoint, data):
 
 def get_node_details(base_url, access_token, secret):
     '''Get details for this node'''
+
+    logging.info('Getting Node Details')
+
     endpoint = '/api/nodes/secret/' + secret
     return server_request('GET', access_token, base_url,
                           endpoint, None)
 
 def update_node_details(base_url, access_token, node_details):
     '''Update details for the node'''
+
+    logging.info('Updating Node Details')
+
     return server_request('PUT', access_token, base_url,
                           '/api/nodes', node_details)
 
 def update_node_status(base_url, access_token, node_details, status):
     '''Update status for the node'''
+
+    logging.info('Updating Node Status to: %s', status)
+
     node_details['status'] = status
     return server_request('PUT', access_token, base_url,
                           '/api/nodes', node_details)
@@ -109,41 +122,43 @@ def update_node_status(base_url, access_token, node_details, status):
 
 def start():
     '''Run the Application'''
-    print 'Starting Cloud Worker Node'
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)-15s %(levelname)-6s %(message)s',
+                        datefmt='%b %d %H:%M:%S')
+
+    logging.info('Starting Cloud Worker Node')
+    logging.info('--------------------------')
 
     #Get Access Token
     TOKEN = get_token(BASE_URL, CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD)
-    print 'Got Access Token: %s' % (TOKEN)
 
     #Get Node Details
     node_details = get_node_details(BASE_URL, TOKEN, NODE_SECRET)
     #Save the Node ID to use in the future
     NODE_ID = node_details.get('id')
-    print 'Got Node ID: %d' % (NODE_ID)
 
     #Update Node Details
     node_details['os'] = "%s %s" %(platform.system(), platform.release())
     node_details['hostname'] = socket.gethostname()
     node_details['ip'] = 'todo'
     node_details['status'] = STATUS_STARTING
-
-    print 'Updating Node Details'
     update_node_details(BASE_URL, TOKEN, node_details)
 
-
-
-    print 'Set Node Status to READY'
+    #Update Status
     update_node_status(BASE_URL, TOKEN, node_details, STATUS_READY)
 
 
     #Loop forever
-      #Update time on server
-      #Get config
+        #Update time on server
+        #Get config
 
-      #Get actions
-      #Respond to actions
+        #Get actions
+        #Respond to actions
 
-      #Send output to server
+        #Get workers/commands
+        #Respond to commands
+
+        #Send output to server
 
 
 if __name__ == '__main__':
