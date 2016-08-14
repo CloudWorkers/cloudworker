@@ -30,5 +30,17 @@
                   tableName="config">
         </loadData>
 
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/command.csv"
+                  separator=";"
+                  tableName="command">
+        </loadData>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/worker.csv"
+                  separator=";"
+                  tableName="worker">
+        </loadData>
+
     </changeSet>
 </databaseChangeLog>
