@@ -23,10 +23,6 @@ CLIENT_SECRET = 'nodeSecret1'
 USERNAME = 'node' #You can login to the Server UI with this
 PASSWORD = 'nodePassword'
 
-#Important temporary session details
-TOKEN = ''
-NODE_ID = ''
-
 #API Enums
 STATUS_STOPPED = 'STOPPED'
 STATUS_STARTING = 'STARTING'
@@ -235,8 +231,6 @@ def start():
 
     #Get Node Details
     node_details = get_node_details(BASE_URL, TOKEN, NODE_SECRET)
-    #Save the Node ID to use in the future
-    NODE_ID = node_details.get('id')
 
     #Update Node Details
     node_details['os'] = "%s %s" %(platform.system(), platform.release())
