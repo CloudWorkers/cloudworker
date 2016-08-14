@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#/"><span>jhipster</span> <span class="navbar-version">v{{VERSION}}</span></a>
+            <a class="navbar-brand" href="#/"><span>CloudWorker</span> <span class="navbar-version">v{{VERSION}}</span></a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse" ng-switch="isAuthenticated()">
             <ul class="nav navbar-nav navbar-right">
@@ -17,30 +17,37 @@
                         <span class="hidden-sm">Home</span>
                     </a>
                 </li>
+                
+                <li ui-sref-active="active">
+                    <a ui-sref="node" data-toggle="collapse" data-target=".navbar-collapse.in">
+                        <span class="glyphicon glyphicon-equalizer"></span>
+                        <span class="hidden-sm">Nodes</span>
+                    </a>
+                </li>
+                
+                
                 <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
                 <li ui-sref-active="active" ng-switch-when="true" class="dropdown pointer">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="">
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
                             <span class="hidden-sm">
-                                Entities
+                                Management
                             </span>
                             <b class="caret"></b>
                         </span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li ui-sref-active="active" ><a ui-sref="node" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
-                        &#xA0;<span >node</span></a></li>
-                        <li ui-sref-active="active" ><a ui-sref="command" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
-                        &#xA0;<span >command</span></a></li>
-                        <li ui-sref-active="active" ><a ui-sref="config" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
-                        &#xA0;<span >config</span></a></li>
-                        <li ui-sref-active="active" ><a ui-sref="action" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
-                        &#xA0;<span >action</span></a></li>
-                        <li ui-sref-active="active" ><a ui-sref="worker" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
-                        &#xA0;<span >worker</span></a></li>
-                        <li ui-sref-active="active" ><a ui-sref="output" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
-                        &#xA0;<span >output</span></a></li>
+                        <li ui-sref-active="active" ><a ui-sref="worker" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-tasks"></span>
+                        &#xA0;<span >Manage Workers</span></a></li>
+                        <li ui-sref-active="active" ><a ui-sref="command" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-cloud-upload"></span>
+                        &#xA0;<span >Run Command</span></a></li>
+                        <li ui-sref-active="active" ><a ui-sref="action" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-cloud-download"></span>
+                        &#xA0;<span >Send Action</span></a></li>
+                        <li ui-sref-active="active" ><a ui-sref="config" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-wrench"></span>
+                        &#xA0;<span >Node Config</span></a></li>
+                        <li ui-sref-active="active" ><a ui-sref="output" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-list-alt"></span>
+                        &#xA0;<span >View Outputs</span></a></li>
                         <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                     </ul>
                 </li>
@@ -71,7 +78,7 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="" id="admin-menu">
                         <span>
                             <span class="glyphicon glyphicon-tower"></span>
-                            <span class="hidden-sm">Administration</span>
+                            <span class="hidden-sm">Server</span>
                             <b class="caret"></b>
                         </span>
                     </a>

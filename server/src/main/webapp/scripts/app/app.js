@@ -49,7 +49,7 @@ angular.module('cloudworkerApp', ['LocalStorageModule',
     })
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider,  httpRequestInterceptorCacheBusterProvider, AlertServiceProvider) {
         // uncomment below to make alerts look like toast
-        //AlertServiceProvider.showAsToast(true);
+        AlertServiceProvider.showAsToast(true);
 
         //Cache everything except rest api requests
         httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/], true);
