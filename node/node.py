@@ -199,12 +199,15 @@ def respond_to_action(base_url, access_token, action_details):
 
     logging.info('Responding to Action: %s', action)
 
-    #TODO Actually respond to action
-
     #Mark action as completed
     update_action_status(base_url, access_token,
                          action_details, ACTION_STATUS_COMPLETED)
 
+    #TODO respond to all actions
+    if action == ACTION_KILL:
+        message = 'Shutting down node.'
+        logging.info(message)
+        sys.exit()
 
 
 def start():
