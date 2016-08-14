@@ -20,7 +20,7 @@
             </tr>
             <tr>
                 <td>
-                    <span>node</span>
+                    <span>Node</span>
                 </td>
                 <td>
                     <a class="form-control-static" ui-sref="node.detail({id:output.node.id})">{{output.node.name}}</a>
@@ -28,12 +28,21 @@
             </tr>
             <tr>
                 <td>
-                    <span>worker</span>
+                    <span>Worker</span>
                 </td>
                 <td>
                     <a class="form-control-static" ui-sref="worker.detail({id:output.worker.id})">{{output.worker.id}}</a>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <span>Date</span>
+                </td>
+                <td>
+                    {{output.date | date:'medium'}}
+                </td>
+            </tr>            
+            
             </tbody>
         </table>
     </div>

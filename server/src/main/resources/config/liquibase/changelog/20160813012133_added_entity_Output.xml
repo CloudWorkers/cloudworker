@@ -26,6 +26,7 @@
             </column>
             <column name="node_id" type="bigint"/>
             <column name="worker_id" type="bigint"/>
+            <column name="date" type="timestamp"/>
         </createTable>
         
         <addForeignKeyConstraint baseColumnNames="node_id"

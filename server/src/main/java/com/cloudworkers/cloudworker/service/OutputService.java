@@ -1,6 +1,7 @@
 package com.cloudworkers.cloudworker.service;
 
 import com.cloudworkers.cloudworker.domain.Output;
+import com.cloudworkers.cloudworker.domain.util.JSR310DateConverters.DateToZonedDateTimeConverter;
 import com.cloudworkers.cloudworker.repository.OutputRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +35,11 @@ public class OutputService {
      */
     public Output save(Output output) {
         log.debug("Request to save Output : {}", output);
+        
+        //add the current date in
+        ZonedDateTime now = DateToZonedDateTimeConverter.INSTANCE.convert(new Date());
+        output.setDate(now);
+        
         Output result = outputRepository.save(output);
         return result;
     }

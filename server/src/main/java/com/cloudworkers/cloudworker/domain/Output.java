@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -33,6 +34,9 @@ public class Output implements Serializable {
     @ManyToOne
     @JoinColumn(name = "worker_id")
     private Worker worker;
+
+    @Column(name = "date")
+    private ZonedDateTime date;
 
     public Long getId() {
         return id;
@@ -66,6 +70,14 @@ public class Output implements Serializable {
         this.worker = worker;
     }
 
+    public ZonedDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(ZonedDateTime date) {
+        this.date = date;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -88,6 +100,7 @@ public class Output implements Serializable {
         return "Output{" +
             "id=" + id +
             ", message='" + message + "'" +
+            ", date='" + date + "'" +
             '}';
     }
 }

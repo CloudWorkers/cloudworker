@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.cloudworkers.cloudworker.domain.Action;
 import com.cloudworkers.cloudworker.domain.Node;
 import com.cloudworkers.cloudworker.domain.enumeration.ActionStatus;
+import com.cloudworkers.cloudworker.domain.util.JSR310DateConverters.DateToZonedDateTimeConverter;
 import com.cloudworkers.cloudworker.repository.ActionRepository;
 import com.cloudworkers.cloudworker.service.NodeService;
 import com.cloudworkers.cloudworker.web.rest.util.HeaderUtil;
@@ -19,6 +20,8 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +52,14 @@ public class ActionResource {
         if (action.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("action", "idexists", "A new action cannot already have an ID")).body(null);
         }
+        
+        //add the current date in
+        ZonedDateTime now = DateToZonedDateTimeConverter.INSTANCE.convert(new Date());
+        action.setDate(now);
+        
+        //Set status to PENDING
+        action.setStatus(ActionStatus.PENDING);
+        
         Action result = actionRepository.save(action);
         return ResponseEntity.created(new URI("/api/actions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("action", result.getId().toString()))
