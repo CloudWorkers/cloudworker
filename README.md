@@ -1,4 +1,4 @@
-# cloudworker
+# CloudWorker
 Turn any computer into a processing-agent. Manage all these cloudworkers through a centralised management system.
 
 #Wiki
@@ -6,4 +6,39 @@ Turn any computer into a processing-agent. Manage all these cloudworkers through
 
 #To Run
 
-```python node.py <server> <secret> ```
+##Server
+
+```
+java -jar cloudworker-0.0.1-SNAPSHOT.war --spring.profiles.active=prod
+```
+
+##Node
+
+```
+python node.py <server> <secret>
+```
+For example
+```
+python node.py http://localhost:8080 1753bb75-f3da-4fd7-9227-475f6b95dbaa 
+```
+
+
+#Development
+
+##Server
+
+Backend
+```
+mvn spring-boot:run
+```
+
+Frontend
+```
+grunt serve
+```
+
+##Node
+
+```
+python node.py <server> <secret>
+```
