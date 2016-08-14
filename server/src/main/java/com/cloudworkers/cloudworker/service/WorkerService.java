@@ -58,6 +58,17 @@ public class WorkerService {
     }
 
     /**
+     *  get worker by node id.
+     *  @return the entity
+     */
+    @Transactional(readOnly = true) 
+    public List<Worker> findAllByNodeId(Long id) {
+        log.debug("Request to get Worker for Node : {}", id);
+        List<Worker> workers = workerRepository.findAllByNodeId(id);
+        return workers;
+    }
+    
+    /**
      *  delete the  worker by id.
      */
     public void delete(Long id) {

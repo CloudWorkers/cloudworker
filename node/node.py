@@ -140,6 +140,17 @@ def get_node_actions(base_url, access_token, node_details):
     logging.info('Got Pending Actions: %s', response_data)
     return response_data
 
+def get_workers(base_url, access_token, node_details):
+    '''Get workers for node'''
+
+    logging.info('Getting Workers')
+
+    endpoint = '/api/workers/node/%d' % node_details['id']
+    response_data = server_request('GET', access_token, base_url,
+                                   endpoint, None)
+    logging.info('Got Workers: %s', response_data)
+    return response_data
+
 
 def update_node_details(base_url, access_token, node_details):
     '''Update details for the node'''
@@ -263,9 +274,11 @@ def start():
             respond_to_action(BASE_URL, TOKEN, action_details)
 
 
-        #TODO
         #Get workers/commands
-        #Respond to commands
+        workers = get_workers(BASE_URL, TOKEN, node_details)
+
+        #TODO
+        #Respond to/run commands
         #Send output to server
 
 

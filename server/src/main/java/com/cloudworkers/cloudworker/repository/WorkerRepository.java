@@ -11,4 +11,6 @@ import java.util.List;
  */
 public interface WorkerRepository extends JpaRepository<Worker,Long> {
 
+	@Query(value = "SELECT * FROM worker WHERE node_id = ?1", nativeQuery = true)
+	List<Worker> findAllByNodeId(Long id);
 }

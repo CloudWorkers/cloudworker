@@ -1,7 +1,9 @@
 package com.cloudworkers.cloudworker.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.cloudworkers.cloudworker.domain.Node;
 import com.cloudworkers.cloudworker.domain.Worker;
+import com.cloudworkers.cloudworker.service.NodeService;
 import com.cloudworkers.cloudworker.service.WorkerService;
 import com.cloudworkers.cloudworker.web.rest.util.HeaderUtil;
 import com.cloudworkers.cloudworker.web.rest.util.PaginationUtil;
@@ -32,6 +34,9 @@ public class WorkerResource {
         
     @Inject
     private WorkerService workerService;
+    
+    @Inject
+    private NodeService nodeService;
     
     /**
      * POST  /workers -> Create a new worker.
@@ -84,6 +89,29 @@ public class WorkerResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+    /**
+     * GET  /workers/node/:id -> get workers for node "id".
+     */
+    @RequestMapping(value = "/workers/node/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Worker>> getNodeWorker(@PathVariable Long id) {
+        log.debug("REST request to get Worker for Node : {}", id);
+        
+        Node node = nodeService.findOne(id);
+        if (node.getId() == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        
+        List<Worker> workers = workerService.findAllByNodeId(id);
+        return Optional.ofNullable(workers)
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    
     /**
      * GET  /workers/:id -> get the "id" worker.
      */
