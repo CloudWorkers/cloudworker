@@ -38,6 +38,13 @@ STATUS_DISABLED = 'DISABLED'
 CONFIG_MAX_WORKERS = 'MAX_WORKERS'
 CONFIG_POLL_PERIOD = 'POLL_PERIOD'
 
+ACTION_KILL = 'KILL'
+ACTION_START_WORKER = 'START_WORKER'
+ACTION_STOP_WORKER = 'STOP_WORKER'
+
+ACTION_STATUS_PENDING = 'PENDING'
+ACTION_STATUS_COMPLETED = 'COMPLETED'
+
 
 def run(command):
     '''Run a command locally'''
@@ -160,6 +167,44 @@ def update_node_status(base_url, access_token, node_details, status):
                           '/api/nodes', node_details)
 
 
+def send_output(base_url, access_token, node_details, worker_details, message):
+    '''Send Output to server'''
+
+    logging.info('Sending Output to Server: %s', message)
+
+    data = {'message': message,
+            'node': node_details,
+            'worker': worker_details}
+
+    return server_request('POST', access_token, base_url,
+                          '/api/outputs', data)
+
+
+def update_action_status(base_url, access_token, action_details, status):
+    '''Update status for the action'''
+
+    logging.info('Updating Action (%s) Status to: %s', action_details['action'], status)
+
+    action_details['status'] = status
+    return server_request('PUT', access_token, base_url,
+                          '/api/actions', action_details)
+
+
+def respond_to_action(base_url, access_token, action_details):
+    '''Respond to Actions from the server'''
+
+    action = action_details['action']
+    args = action_details['args']
+
+    logging.info('Responding to Action: %s', action)
+
+    #TODO Actually respond to action
+
+    #Mark action as completed
+    update_action_status(base_url, access_token,
+                         action_details, ACTION_STATUS_COMPLETED)
+
+
 
 def start():
     '''Run the Application'''
@@ -206,10 +251,17 @@ def start():
         pending_actions = get_node_actions(BASE_URL, TOKEN, node_details)
 
         #Respond to actions
+        if len(pending_actions) > 0:
+            message = "Responding to %d Actions ..." % len(pending_actions)
+            send_output(BASE_URL, TOKEN, node_details, None, message)
 
+        for action_details in pending_actions:
+            respond_to_action(BASE_URL, TOKEN, action_details)
+
+
+        #TODO
         #Get workers/commands
         #Respond to commands
-
         #Send output to server
 
 
