@@ -118,7 +118,7 @@ public class OAuth2ServerConfiguration {
                 .inMemory()
                 .withClient(jHipsterProperties.getSecurity().getAuthentication().getOauth().getClientid())
                 .scopes("read", "write")
-                .authorities(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
+                .authorities(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER, AuthoritiesConstants.NODE)
                 .authorizedGrantTypes("password", "refresh_token", "authorization_code", "implicit")
                 .secret(jHipsterProperties.getSecurity().getAuthentication().getOauth().getSecret())
                 .accessTokenValiditySeconds(jHipsterProperties.getSecurity().getAuthentication().getOauth().getTokenValidityInSeconds());

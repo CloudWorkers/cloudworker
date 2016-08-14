@@ -5,7 +5,7 @@ angular.module('cloudworkerApp').controller('UserManagementDialogController',
         function($scope, $stateParams, $uibModalInstance, entity, User) {
 
         $scope.user = entity;
-        $scope.authorities = ["ROLE_USER", "ROLE_ADMIN"];
+        $scope.authorities = ["ROLE_USER", "ROLE_ADMIN", "ROLE_NODE"];
         var onSaveSuccess = function (result) {
             $scope.isSaving = false;
             $uibModalInstance.close(result);

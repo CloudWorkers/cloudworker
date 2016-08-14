@@ -20,8 +20,8 @@ NODE_SECRET = '1753bb75-f3da-4fd7-9227-475f6b95dbaa'
 #API Config
 CLIENT_ID = 'cloudworkernode'
 CLIENT_SECRET = 'nodeSecret1'
-USERNAME = 'user'
-PASSWORD = 'user'
+USERNAME = 'node' #You can login to the Server UI with this
+PASSWORD = 'nodePassword'
 
 #Important temporary session details
 TOKEN = ''
@@ -58,8 +58,8 @@ def get_token(base_url, client_id, client_secret, username, password):
     logging.info('Getting Access Token...')
 
     token_url = base_url + '/oauth/token'
-    token_data = {'username': password,
-                  'password': username,
+    token_data = {'username': username,
+                  'password': password,
                   'grant_type': 'password',
                   'scope': 'read write',
                   'client_secret': client_secret,
@@ -80,6 +80,7 @@ def get_token(base_url, client_id, client_secret, username, password):
         logging.info('Got Access Token: %s', access_token)
         return access_token
     else:
+        logging.error('There was an error getting the token from the sever!')
         response.raise_for_status()
 
 
