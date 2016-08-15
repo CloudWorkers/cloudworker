@@ -15,6 +15,13 @@ java -jar cloudworker-0.0.1-SNAPSHOT.war --spring.profiles.active=prod
 ##Node
 
 ```
+cd node
+virtualenv env
+source env/bin/activate
+pip install -r requirements.txt
+```
+
+```
 python node.py <server> <secret>
 ```
 For example
