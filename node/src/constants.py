@@ -5,10 +5,6 @@ class Constants(object):
 
     APP = 'CloudWorker'
 
-    #Command Line Args
-    BASE_URL = 'http://localhost:8080'
-    NODE_SECRET = '1753bb75-f3da-4fd7-9227-475f6b95dbaa'
-
     #API Config
     CLIENT_ID = 'cloudworkernode'
     CLIENT_SECRET = 'nodeSecret1'

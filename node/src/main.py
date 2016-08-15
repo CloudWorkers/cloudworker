@@ -10,6 +10,7 @@ from src.action import Action
 from src.worker import Worker
 from src.output import Output
 
+import argparse
 import logging
 import time
 
@@ -25,6 +26,17 @@ def configure_log():
     return log
 
 
+def parse_args():
+    '''Returns the server and secret from command line args'''
+    parser = argparse.ArgumentParser()
+    parser.add_argument('server',\
+        help='URL of the server. e.g. http://localhost:8080')
+    parser.add_argument('secret',\
+        help='Node\'s secret key. e.g. 1753bb75-f3da-4fd7-9227-475f6b95dbaa')
+    return parser.parse_args()
+
+
+
 def start():
     '''Start the Application'''
 
@@ -32,13 +44,16 @@ def start():
     log.info('Starting Cloud Worker Node Agent')
     log.info('--------------------------')
 
-    credentials = {'secret': C.NODE_SECRET,
-                   'client_id': C.CLIENT_ID,
-                   'client_secret': C.CLIENT_SECRET,
-                   'username': C.USERNAME,
-                   'password': C.PASSWORD}
+    args = parse_args()
 
-    server = Server(C.BASE_URL, credentials)
+    settings = {'base_url': args.server,
+                'secret': args.secret,
+                'client_id': C.CLIENT_ID,
+                'client_secret': C.CLIENT_SECRET,
+                'username': C.USERNAME,
+                'password': C.PASSWORD}
+
+    server = Server(settings)
 
     node = Node(server)
 
@@ -55,8 +70,10 @@ def start():
     workers = Worker(server, node)
     output = Output(server, node)
 
-    #Loop forever
-    while True:
+    finished = False
+
+    #Loop forever (kind of)
+    while not finished:
         log.info('Looping')
         log.info('--------------------------')
 

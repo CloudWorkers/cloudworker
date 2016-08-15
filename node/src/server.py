@@ -12,10 +12,9 @@ class Server(object):
 
     log = logging.getLogger(C.APP)
 
-    def __init__(self, base_url, credentials):
+    def __init__(self, settings):
         '''Returns a Server which is ready for requests'''
-        self.base_url = base_url
-        self.credentials = credentials
+        self.settings = settings
         self.access_token = self._get_token()
 
 
@@ -24,19 +23,19 @@ class Server(object):
 
         self.log.info('Getting Access Token...')
 
-        token_url = self.base_url + '/oauth/token'
-        
-        token_data = {'username': self.credentials['username'],
-                      'password': self.credentials['password'],
+        token_url = self.settings['base_url'] + '/oauth/token'
+
+        token_data = {'username': self.settings['username'],
+                      'password': self.settings['password'],
                       'grant_type': 'password',
                       'scope': 'read write',
-                      'client_secret': self.credentials['client_secret'],
-                      'client_id': self.credentials['client_id']}
+                      'client_secret': self.settings['client_secret'],
+                      'client_id': self.settings['client_id']}
 
         encoded_credentials = base64.b64encode(\
-                    self.credentials['client_id'] +\
+                    self.settings['client_id'] +\
                     ':' +\
-                    self.credentials['client_secret'])
+                    self.settings['client_secret'])
 
         headers = {'Content-Type': 'application/x-www-form-urlencoded',
                    'Accept': 'application/json',
@@ -59,7 +58,7 @@ class Server(object):
 
     def get_secret(self):
         '''Returns the Node Secret'''
-        return self.credentials['secret']
+        return self.settings['secret']
 
     def put(self, endpoint, data):
         '''Return data from a PUT request to the server'''
@@ -76,7 +75,7 @@ class Server(object):
 
     def _request(self, verb, endpoint, data):
         '''Generic Request to the server'''
-        url = self.base_url + endpoint
+        url = self.settings['base_url'] + endpoint
 
         self.log.debug('Making %s request to: %s', verb, url)
 
