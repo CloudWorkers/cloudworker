@@ -3,7 +3,7 @@ For a developer or small team moving to the cloud can actually be expensive and 
 Manage and track all your cloudworker nodes through a centralised management system. Too easy!
 
 #Features
-* Process multiple commands/scripts on each code
+* Process multiple commands/scripts on each node
 * Send one off actions to a machine
 * Elegant central management system
 * Very easy installation
