@@ -88,7 +88,7 @@ def start():
 
         #Respond to actions
         if actions.has_pending():
-            message = 'Responding to %d Actions ...' % len(num_pending)
+            message = 'Responding to %d Actions ...' % num_pending
             output.send(message)
 
             actions.respond_to_pending()

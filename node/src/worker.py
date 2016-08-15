@@ -16,11 +16,17 @@ class Worker(object):
         self.node = node
         self.workers = None
 
-
     def refresh(self):
         '''Get Workers'''
         self.workers = self._get(self.node)
         self.log.info('Got %d Workers', len(self.workers))
+
+
+    def to_serializable(self):
+        '''Allows object to be serialized'''
+        #TODO Probably need to implement
+        pass
+
 
     def _get(self, node):
         '''Get workers for node'''

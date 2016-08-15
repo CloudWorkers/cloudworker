@@ -27,7 +27,7 @@ class Output(object):
         self.log.info('Sending Output to Server: %s', message)
 
         data = {'message': message,
-                'node': self.node,
+                'node': self.node.to_serializable(),
                 'worker': worker}
 
         data = self.server.post('/api/outputs', data)

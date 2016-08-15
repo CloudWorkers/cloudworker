@@ -26,6 +26,11 @@ class Node(object):
         return self.server.get(endpoint, None)
 
 
+    def to_serializable(self):
+        '''Allows object to be serialized'''
+        return self.node_details
+
+
     def send_info(self):
         '''Send Node (OS Level) Information to the server'''
         self.node_details['os'] = "%s %s"\
