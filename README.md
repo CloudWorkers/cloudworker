@@ -1,8 +1,13 @@
 # CloudWorker
-Turn any computer into a processing-agent. Manage all these cloudworkers through a centralised management system.
+For a developer or small team moving to the cloud can actually be expensive and tedious. Take advantage of the processing power of your old PC, laptop or Raspberry Pi. Turn any computer into a processing-node! You only need to install a small python agent on your old machine.
+Manage and track all your cloudworker nodes through a centralised management system. Too easy!
 
-#Wiki
-* https://github.com/CloudWorkers/cloudworker/wiki/Data-Model
+#Features
+* Process multiple commands/scripts on each code
+* Send one off actions to a machine
+* Elegant central management system
+* Very easy installation
+* You can run anything on your existing machine locally
 
 #To Run
 
