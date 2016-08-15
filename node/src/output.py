@@ -1,13 +1,17 @@
-"""Output"""
+'''Output'''
+
+from src.constants import Constants as C
 
 import logging
 
 
 class Output(object):
-    """ Output """
+    '''Output'''
+
+    log = logging.getLogger(C.APP)
 
     def __init__(self, server, node):
-        """Inits"""
+        '''Init '''
         self.server = server
         self.node = node
 
@@ -20,7 +24,7 @@ class Output(object):
     def send_w(self, message, worker):
         '''Send Output to server (with Worker info)'''
 
-        logging.info('Sending Output to Server: %s', message)
+        self.log.info('Sending Output to Server: %s', message)
 
         data = {'message': message,
                 'node': self.node,

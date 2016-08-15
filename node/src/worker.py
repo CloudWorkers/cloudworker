@@ -1,35 +1,39 @@
-"""Worker"""
+'''Worker '''
+
+from src.constants import Constants as C
 
 import os
 import logging
 
 class Worker(object):
-    """ Worker """
+    '''Worker '''
+
+    log = logging.getLogger(C.APP)
 
     def __init__(self, server, node):
-        """Inits"""
+        '''Init '''
         self.server = server
         self.node = node
         self.workers = None
 
 
-    def get(self):
+    def refresh(self):
+        '''Get Workers'''
         self.workers = self._get(self.node)
+        self.log.info('Got %d Workers', len(self.workers))
 
     def _get(self, node):
         '''Get workers for node'''
 
-        logging.info('Getting Workers')
+        self.log.info('Getting Workers')
 
         endpoint = '/api/workers/node/%d' % node.get_id()
-        data = self.server.get(endpoint, None)
-        logging.info('Got Workers: %s', data)
+        return self.server.get(endpoint, None)
 
-        return data
 
     def _run(self, command):
         '''Run a command locally'''
 
-        logging.info('Running Command: %s', command)
+        self.log.info('Running Command: %s', command)
         os.system('%s' % command)
 

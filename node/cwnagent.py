@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-'''CloudWorker Node'''
+'''CloudWorker Node Agent Runner'''
 
 from src import main
 

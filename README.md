@@ -22,11 +22,11 @@ pip install -r requirements.txt
 ```
 
 ```
-python node.py <server> <secret>
+python cwnagent.py <server> <secret>
 ```
 For example
 ```
-python node.py http://localhost:8080 1753bb75-f3da-4fd7-9227-475f6b95dbaa 
+python cwnagent.py http://localhost:8080 1753bb75-f3da-4fd7-9227-475f6b95dbaa 
 ```
 
 

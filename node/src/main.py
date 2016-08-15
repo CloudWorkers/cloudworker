@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 '''CloudWorker Node'''
 
-import logging
-import time
+from src.constants import Constants as C
 
-from src.constants import Constants
 from src.server import Server
 from src.node import Node
 from src.config import Config
@@ -12,24 +10,35 @@ from src.action import Action
 from src.worker import Worker
 from src.output import Output
 
+import logging
+import time
+
+def configure_log():
+    '''Configure Logging for the application'''
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)-15s %(levelname)-6s %(message)-80s (%(filename)s:%(lineno)s)',
+                        datefmt='%b %d %H:%M:%S')
+    #Stop libraries from logging too much
+    logging.getLogger("requests").setLevel(logging.WARNING)
+    logging.getLogger("urllib3").setLevel(logging.WARNING)
+    log = logging.getLogger(C.APP)
+    return log
+
 
 def start():
-    '''Run the Application'''
-    logging.basicConfig(level=logging.INFO,
-                        format='%(asctime)-15s %(levelname)-6s %(message)s',
-                        datefmt='%b %d %H:%M:%S')
+    '''Start the Application'''
 
-    logging.info('Starting Cloud Worker Node')
-    logging.info('--------------------------')
+    log = configure_log()
+    log.info('Starting Cloud Worker Node Agent')
+    log.info('--------------------------')
 
+    credentials = {'secret': C.NODE_SECRET,
+                   'client_id': C.CLIENT_ID,
+                   'client_secret': C.CLIENT_SECRET,
+                   'username': C.USERNAME,
+                   'password': C.PASSWORD}
 
-    credentials = {'secret': Constants.NODE_SECRET,
-                   'client_id': Constants.CLIENT_ID,
-                   'client_secret': Constants.CLIENT_SECRET,
-                   'username': Constants.USERNAME,
-                   'password': Constants.PASSWORD}
-
-    server = Server(Constants.BASE_URL, credentials)
+    server = Server(C.BASE_URL, credentials)
 
     node = Node(server)
 
@@ -37,7 +46,7 @@ def start():
     node.send_info()
 
     #Update the node status to ready
-    node.update_node_status(Constants.STATUS_READY)
+    node.update_node_status(C.STATUS_READY)
 
     #Get Config
     config = Config(server, node)
@@ -48,7 +57,8 @@ def start():
 
     #Loop forever
     while True:
-        logging.info('Looping')
+        log.info('Looping')
+        log.info('--------------------------')
 
         #Update last seen date
         node.update_node_date()
@@ -61,23 +71,23 @@ def start():
 
         #Respond to actions
         if actions.has_pending():
-            message = "Responding to %d Actions ..." % len(num_pending)
+            message = 'Responding to %d Actions ...' % len(num_pending)
             output.send(message)
 
             actions.respond_to_pending()
 
 
         #Get workers/commands
-        workers.get()
+        workers.refresh()
 
         #TODO
         #Respond to/run commands
         #Send output to server
 
 
-        logging.info('Sleeping for %d seconds ...', \
-                     config.get(Constants.CONFIG_POLL_PERIOD))
-        time.sleep(config.get(Constants.CONFIG_POLL_PERIOD))
+        log.info('Sleeping for %d seconds ...', 
+                 config.get(C.CONFIG_POLL_PERIOD))
+        time.sleep(config.get(C.CONFIG_POLL_PERIOD))
 
 
 

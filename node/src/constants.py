@@ -1,6 +1,9 @@
-"""Constants"""
+'''Constants'''
+
 class Constants(object):
-    """ Constants """
+    '''Constants'''
+
+    APP = 'CloudWorker'
 
     #Command Line Args
     BASE_URL = 'http://localhost:8080'
