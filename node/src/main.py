@@ -96,6 +96,7 @@ def start():
 
         #Get workers/commands
         workers.refresh()
+        workers.process_workers()
 
         #TODO
         #Respond to/run commands
