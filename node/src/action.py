@@ -3,12 +3,10 @@
 from src.constants import Constants as C
 
 import sys
-import logging
+import logging as log
 
 class Action(object):
     '''Action'''
-
-    log = logging.getLogger(C.APP)
 
     def __init__(self, server, node):
         '''Init '''
@@ -25,25 +23,25 @@ class Action(object):
     def _get_pending(self, node):
         '''Get pending actions for node'''
 
-        self.log.info('Getting Node Actions')
+        log.info('Getting Node Actions')
 
         endpoint = '/api/actions/pending/%d' % node.get_id()
         data = self.server.get(endpoint, None)
 
-        self.log.info('Got Pending Actions: %s', data)
+        log.info('Got Pending Actions: %s', data)
         return data
 
     def has_pending(self):
         '''Check if there are pending actions'''
 
         num_pending = len(self.actions)
-        self.log.info('Has %d Pending Actions', num_pending)
+        log.info('Has %d Pending Actions', num_pending)
         return num_pending > 0
 
     def update_action_status(self, action, status):
         '''Update status for the action'''
 
-        self.log.info('Updating Action (%s) Status to: %s', action['action'], status)
+        log.info('Updating Action (%s) Status to: %s', action['action'], status)
 
         action['status'] = status
         return self.server.put('/api/actions', action)
@@ -61,7 +59,7 @@ class Action(object):
         action_name = action['action']
         #args = action['args']
 
-        self.log.info('Responding to Action: %s', action)
+        log.info('Responding to Action: %s', action)
 
         #Mark action as completed
         self.update_action_status(action, C.ACTION_STATUS_COMPLETED)
@@ -69,6 +67,6 @@ class Action(object):
         #TODO respond to all actions
         if action_name == C.ACTION_KILL:
             message = 'Shutting down node.'
-            self.log.info(message)
+            log.info(message)
             sys.exit()
 

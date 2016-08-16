@@ -1,13 +1,9 @@
 '''Config'''
 
-from src.constants import Constants as C
-
-import logging
+import logging as log
 
 class Config(object):
     '''Config'''
-
-    log = logging.getLogger(C.APP)
 
     def __init__(self, server, node):
         '''Init '''
@@ -27,7 +23,7 @@ class Config(object):
     def _get_config(self, node):
         '''Get config for node'''
 
-        self.log.info('Getting Node Config')
+        log.info('Getting Node Config')
 
         endpoint = '/api/configs/node/%d' % node.get_id()
         data = self.server.get(endpoint, None)
@@ -35,6 +31,6 @@ class Config(object):
         result = {}
         for item in data:
             result[item['item']] = int(item['value'])
-        self.log.info('Got Config: %s', result)
+        log.info('Got Config: %s', result)
         return result
 

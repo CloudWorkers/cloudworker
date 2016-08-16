@@ -4,13 +4,11 @@ from src.constants import Constants as C
 
 import platform
 import socket
-import logging
+import logging as log
 
 
 class Node(object):
     '''Node'''
-
-    log = logging.getLogger(C.APP)
 
     def __init__(self, server):
         '''Inits a Node'''
@@ -20,7 +18,7 @@ class Node(object):
     def _get_node_details(self):
         '''Get details for this node'''
 
-        self.log.info('Getting Node Details')
+        log.info('Getting Node Details')
 
         endpoint = '/api/nodes/secret/%s' % self.server.get_secret()
         return self.server.get(endpoint, None)
@@ -48,15 +46,15 @@ class Node(object):
     def update_node_details(self):
         '''Update details for the node'''
 
-        self.log.info('Updating Node Details')
+        log.info('Updating Node Details')
 
-        return self.server.put('/api/nodes', self.node_details)
+        return self.server.put('/api/nodes', self.to_serializable())
 
 
     def update_node_date(self):
         '''Update the date for the node'''
 
-        self.log.info('Updating Node Date')
+        log.info('Updating Node Date')
 
         endpoint = '/api/nodes/date/%d' % self.get_id()
         return self.server.put(endpoint, None)
@@ -65,9 +63,9 @@ class Node(object):
     def update_node_status(self, status):
         '''Update status for the node'''
 
-        self.log.info('Updating Node Status to: %s', status)
+        log.info('Updating Node Status to: %s', status)
 
         self.node_details['status'] = status
-        return self.server.put('/api/nodes', self.node_details)
+        return self.server.put('/api/nodes', self.to_serializable())
 
 

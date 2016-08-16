@@ -3,12 +3,10 @@
 from src.constants import Constants as C
 
 import os
-import logging
+import logging as log
 
 class Worker(object):
     '''Worker '''
-
-    log = logging.getLogger(C.APP)
 
     def __init__(self, server, node):
         '''Init '''
@@ -19,7 +17,7 @@ class Worker(object):
     def refresh(self):
         '''Get Workers'''
         self.workers = self._get(self.node)
-        self.log.info('Got %d Workers', len(self.workers))
+        log.info('Got %d Workers', len(self.workers))
 
 
     def to_serializable(self):
@@ -31,7 +29,7 @@ class Worker(object):
     def _get(self, node):
         '''Get workers for node'''
 
-        self.log.info('Getting Workers')
+        log.info('Getting Workers')
 
         endpoint = '/api/workers/node/%d' % node.get_id()
         return self.server.get(endpoint, None)
@@ -40,6 +38,6 @@ class Worker(object):
     def _run(self, command):
         '''Run a command locally'''
 
-        self.log.info('Running Command: %s', command)
+        log.info('Running Command: %s', command)
         os.system('%s' % command)
 

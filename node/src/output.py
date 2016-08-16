@@ -1,14 +1,10 @@
 '''Output'''
 
-from src.constants import Constants as C
-
-import logging
+import logging as log
 
 
 class Output(object):
     '''Output'''
-
-    log = logging.getLogger(C.APP)
 
     def __init__(self, server, node):
         '''Init '''
@@ -24,7 +20,7 @@ class Output(object):
     def send_w(self, message, worker):
         '''Send Output to server (with Worker info)'''
 
-        self.log.info('Sending Output to Server: %s', message)
+        log.info('Sending Output to Server: %s', message)
 
         data = {'message': message,
                 'node': self.node.to_serializable(),

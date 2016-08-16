@@ -5,12 +5,10 @@ from src.constants import Constants as C
 import requests
 import json
 import base64
-import logging
+import logging as log
 
 class Server(object):
     '''Server '''
-
-    log = logging.getLogger(C.APP)
 
     def __init__(self, settings):
         '''Returns a Server which is ready for requests'''
@@ -21,7 +19,7 @@ class Server(object):
     def _get_token(self):
         '''Gets oauth2 access token from the sever'''
 
-        self.log.info('Getting Access Token...')
+        log.info('Getting Access Token...')
 
         token_url = self.settings['base_url'] + '/oauth/token'
 
@@ -49,10 +47,10 @@ class Server(object):
             access_token = response.json().get('access_token')
             #expires = response.json().get('expires_in')
             #refresh_token = response.json().get('refresh_token')
-            self.log.info('Got Access Token: %s', access_token)
+            log.info('Got Access Token: %s', access_token)
             return access_token
         else:
-            self.log.error('Error getting token from sever!')
+            log.error('Error getting token from sever!')
             response.raise_for_status()
 
 
@@ -77,7 +75,7 @@ class Server(object):
         '''Generic Request to the server'''
         url = self.settings['base_url'] + endpoint
 
-        self.log.debug('Making %s request to: %s', verb, url)
+        log.debug('Making %s request to: %s', verb, url)
 
         headers = {'Authorization': 'bearer ' + self.access_token,
                    'Accept': 'application/json',
