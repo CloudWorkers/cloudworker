@@ -24,7 +24,6 @@ class Processor(object):
         '''Start a Process'''
         w_id = worker['id']
         
-
         log.info('Starting Process for Worker %d', w_id)
 
         #Start a process
@@ -58,7 +57,7 @@ class Processor(object):
 
         output_file = 'out-%s.txt' % w_id
         error_file = 'error-%s.txt' % w_id
-        
+
         p = Popen(command,
                   stdout=open(output_file, 'a'),
                   stderr=open(error_file, 'a'),

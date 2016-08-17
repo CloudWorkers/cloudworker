@@ -7,6 +7,7 @@ from src.server import Server
 from src.node import Node
 from src.config import Config
 from src.action import Action
+from src.processor import Processor
 from src.worker import Worker
 from src.output import Output
 
@@ -67,7 +68,8 @@ def start():
     config = Config(server, node)
 
     actions = Action(server, node)
-    workers = Worker(server, node)
+    processor = Processor()
+    workers = Worker(server, node, processor)
     output = Output(server, node)
 
     finished = False
