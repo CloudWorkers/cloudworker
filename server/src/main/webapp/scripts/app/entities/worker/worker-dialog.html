@@ -8,16 +8,12 @@
     </div>
     <div class="modal-body">
         <jh-alert-error></jh-alert-error>
-        <div class="form-group">
-            <label for="id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                    ng-model="worker.id" readonly />
-        </div>
+
         <div class="form-group">
             <label class="control-label" for="field_status">Status</label>
             <select class="form-control" name="status" ng-model="worker.status" id="field_status">
-                <option value="STOPPED">STOPPED</option>
-                <option value="RUNNING">RUNNING</option>
+                <option value="ENABLED">ENABLED</option>
+                <option value="DISABLED">DISABLED</option>
             </select>
         </div>
 
